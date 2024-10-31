@@ -1,0 +1,53 @@
+<div class="container">
+<h1>Welcome to Virtual Booking Agent</h1>
+<br/>
+<% if !current_user.nil? %>
+<h3>You have <%= pluralize(current_user.groups.count,"group")%>:</h3>
+<% end %>
+<p>
+
+<% ccount = 0 %>
+<% if !current_user.nil? and current_user.groups.count > 0 %>
+  <% current_user.groups.each do |g| %>
+    <% if g.concerts.count > 0 %>
+      <% ccount = ccount + g.concerts.count %>
+    <% end %>
+  <% end %>
+  <div> <%= link_to g.title, group_path(g) %></div>
+<% end %>
+
+</p>
+
+<% if !current_user.nil? %>
+<h3>You have <%= pluralize(current_user.venues.count,"venue")%>:</h3>
+<% end %>
+
+<% if user_signed_in? %> 
+ <div> Welcome <%= current_user.email %> </div> 
+ <br/>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+<% else %>
+  <%= button_to "Sign in", new_user_session_path %> 
+<% end %>
+
+<h3>You have <%= pluralize(ccount,"concert")%>:</h3>
+
+<% if user_signed_in? %> 
+ <div> Welcome <%= current_user.email %> </div> 
+ <br/>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+<% else %>
+  <%= button_to "Sign in", new_user_session_path %> 
+<% end %>
+
+<%= button_to "Sign up", "/users/sign_up" %>
+
+
+</div>
+
+<div class="glightbox">
+<div class="php-email">
+  This is a header
+  </div>
+
+</div>
